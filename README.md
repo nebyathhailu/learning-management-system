@@ -1,10 +1,10 @@
-# 🎓 Mini LMS — Laravel Learning Management System
+# Mini LMS — Laravel Learning Management System
 
 A full-featured Learning Management System REST API built with Laravel, following clean architecture principles.
 
 ---
 
-## ✨ Features
+## Features
 
 - **Role-based Auth** — Student, Instructor, Admin via Laravel Sanctum
 - **Course Hierarchy** — Courses → Modules → Lessons
@@ -18,7 +18,7 @@ A full-featured Learning Management System REST API built with Laravel, followin
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 Controllers → Services → Repositories → Eloquent Models
@@ -38,7 +38,7 @@ Controllers → Services → Repositories → Eloquent Models
 
 ---
 
-## 🗄️ Database Schema
+## Database Schema
 
 ```
 users           (id, name, email, password, role)
@@ -55,7 +55,7 @@ notifications   (Laravel default)
 
 ---
 
-## 🚀 Setup
+## Setup
 
 **Requirements:** PHP 8.2+, Composer, MySQL 8+, Node.js 18+
 
@@ -96,7 +96,7 @@ Seed creates three test accounts (password: `password`):
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### Auth
 | Method | Endpoint | Access |
@@ -147,7 +147,7 @@ Seed creates three test accounts (password: `password`):
 
 ---
 
-## 🔐 Authorization
+## Authorization
 
 Routes are protected by two layers:
 
@@ -157,7 +157,7 @@ Routes are protected by two layers:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 app/
@@ -181,13 +181,13 @@ routes/
 
 ---
 
-## 📦 Key Packages
+## Key Packages
 
 - `laravel/sanctum` — API token authentication
 - Laravel Notifications — email + database channels
 
 ---
 
-## 📄 License
+## License
 
 MIT
