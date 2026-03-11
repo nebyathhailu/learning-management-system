@@ -3,47 +3,57 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
+use App\Models\Module;
 use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(int $courseId)
     {
-        //
+        $course = Course::findOrFail($courseId);
+        return response()->json($course->modules()->orderBy('sort_order')->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request, int $courseId)
     {
-        //
+        $course = Course::findOrFail($courseId);
+        $this->authorize('update', $course);
+
+        $data = $request->validate([
+            'title'      => 'required|string|max:255',
+            'sort_order' => 'integer|min:0',
+        ]);
+
+        $module = $course->modules()->create($data);
+        return response()->json($module, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(int $courseId, int $id)
     {
-        //
+        $module = Module::where('course_id', $courseId)->findOrFail($id);
+        return response()->json($module);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $courseId, int $id)
     {
-        //
+        $module = Module::where('course_id', $courseId)->findOrFail($id);
+        $this->authorize('update', $module->course);
+
+        $data = $request->validate([
+            'title'      => 'sometimes|string|max:255',
+            'sort_order' => 'integer|min:0',
+        ]);
+
+        $module->update($data);
+        return response()->json($module);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(int $courseId, int $id)
     {
-        //
+        $module = Module::where('course_id', $courseId)->findOrFail($id);
+        $this->authorize('update', $module->course);
+        $module->delete();
+        return response()->json(['message' => 'Module deleted']);
     }
 }

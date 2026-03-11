@@ -49,7 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Instructor + Admin routes
     Route::middleware('role:instructor,admin')->group(function () {
-        Route::apiResource('courses', CourseController::class)->except(['index','show']);
+        Route::apiResource('courses', CourseController::class)->except(['index']);
         Route::apiResource('courses.modules', ModuleController::class)->except(['index','show']);
         Route::apiResource('modules.lessons', LessonController::class)->except(['index','show']);
         Route::post('/lessons/{lessonId}/assignments', [AssignmentController::class, 'store']);

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseResource;
 use App\Services\CourseService;
 use Illuminate\Http\Request;
-
+use App\Models\Course;
 
 class CourseController extends Controller {
     public function __construct(private CourseService $courseService) {}
@@ -42,8 +42,8 @@ class CourseController extends Controller {
     }
 
 
-    public function update(Request $request, int $id) {
-        $course = \App\Models\Course::findOrFail($id);
+    public function update(Request $request, Course $course) {
+        // $course = \App\Models\Course::findOrFail($id);
         $this->authorize('update', $course);
         $data = $request->validate([
             'title' => 'sometimes|string|max:255',
@@ -51,7 +51,7 @@ class CourseController extends Controller {
             'status' => 'in:draft,published,archived',
             'thumbnail' => 'nullable|image|max:2048',
         ]);
-        $course = $this->courseService->update($id, $data, $request->file('thumbnail'));
+        $course = $this->courseService->update($course->id, $data, $request->file('thumbnail'));
         return new CourseResource($course);
     }
 
